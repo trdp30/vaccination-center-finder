@@ -118,7 +118,7 @@ function App() {
                 <div>
                   {error
                     ? `Error: ${error}`
-                    : "Currenlty no centers avaiable in this pincode. Once centers are available it will notify."}{" "}
+                    : "Currently no centers avaiable in this pincode. Once centers are available it will notify."}{" "}
                 </div>
               )}
             </>
