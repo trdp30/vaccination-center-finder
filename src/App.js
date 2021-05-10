@@ -30,11 +30,11 @@ function App() {
   const triggeredOnce = useRef();
   const timer = useRef();
   const [isLoading, toggleLoading] = useState(false);
-  const notify = useCallback(() => {
+  const notify = useCallback((test = "Notification is active") => {
     Notification.requestPermission((result) => {
       if (result === "granted") {
         navigator.serviceWorker.ready.then((registration) => {
-          registration.showNotification("Vaccination Centers are now avaiable");
+          registration.showNotification(test);
         });
       }
     });
@@ -81,8 +81,12 @@ function App() {
   }, [data]);
 
   useEffect(() => {
+    notify();
+  }, []);
+
+  useEffect(() => {
     if (sessions && sessions.length) {
-      notify();
+      notify("Vaccination Centers are now avaiable");
     }
   }, [sessions, notify]);
 
@@ -97,7 +101,7 @@ function App() {
     <div className="ui container">
       <div className="text-center" style={{ marginTop: 40 }}>
         <h4>Quick Check</h4>
-        <h5>Enter pincode and check vaccination centers are available or not</h5>
+        <h5>Enter pincode/date and check vaccination centers are available or not</h5>
         <p>(It will keep refreshing the data in every 1 min)</p>
         <InputContainer
           updateQuery={updateQuery}
@@ -118,7 +122,7 @@ function App() {
                 <div>
                   {error
                     ? `Error: ${error}`
-                    : "Currently no centers avaiable in this pincode. Once centers are available it will notify."}{" "}
+                    : `Currently no centers available in pincode: ${query.pincode}. Once centers are available it will notify you.`}{" "}
                 </div>
               )}
             </>
